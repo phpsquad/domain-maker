@@ -1,21 +1,71 @@
 # domain-maker
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Travis](https://img.shields.io/travis/phpSquad/domain-maker.svg?style=flat-square)]()
-[![Total Downloads](https://img.shields.io/packagist/dt/phpSquad/domain-maker.svg?style=flat-square)](https://packagist.org/packages/phpSquad/domain-maker)
 
 ## Install
-`composer require phpSquad/domain-maker`
+```bash
+composer require phpsquad/domain-maker
+```
 
 ## Usage
-Write a few lines about the usage of this package.
+The package makes Domain Driven Development easier in Laravel. 
 
-## Testing
-Run the tests with:
+### All Domain Maker Commands are under the prefix domain.
 
-``` bash
-vendor/bin/phpunit
+```bash
+ domain:make:controller        Create a new controller class
+ domain:make:domain            Create a new Domain
+ domain:make:routes            Create a new routes for domain
+ ...
 ```
+
+### Create new Domain
+```bash
+php artisan domain:make:domain
+```
+If this is the first domain the Domains directory will be created under app/Domains along with the specified domain. 
+
+```Bash
+Domains
+├── Invoice
+│   ├── Http
+│   │   ├── Controllers
+│   │   │   └── InvoiceController.php
+│   │   ├── Middleware
+│   │   └── Requests
+│   ├── Models
+│   ├── Repositories
+│   └── routes
+│       └── Invoice.php
+└── Media
+    ├── Http
+    │   ├── Controllers
+    │   │   └── MediaController.php
+    │   ├── Middleware
+    │   └── Requests
+    ├── Models
+    ├── Repositories
+    └── routes
+        └── Media.php
+
+```
+
+
+### Routing
+A standard route file is created when you create a domain via the command. 
+>Routes are discovered automatically via the DomainRouteServiceProvider
+
+To create subsequent route files use:
+
+```bash
+domain:make:routes  <domain-name> <route-file-name>
+```
+For example, if I have a "Payments" domain, and I'd like to group my Stripe Routes I'd run the command like so:
+
+```bash
+domain:make:routes Payments Stripe
+```
+
 
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
@@ -25,8 +75,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
-- [Richard Rohrig](https://github.com/phpSquad)
-- [All Contributors](https://github.com/phpSquad/domain-maker/contributors)
+- [Richard Rohrig](https://github.com/phpsquad)
+- [All Contributors](https://github.com/phpsquad/domain-maker/contributors)
 
 ## Security
 If you discover any security-related issues, please email rick@wambo.com instead of using the issue tracker.
