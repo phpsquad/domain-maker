@@ -4,24 +4,15 @@ namespace PhpSquad\DomainMaker\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class DomainMakeCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'domain:make:domain {domain} {name?}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    protected $name = 'domain:make:domain';
     protected $description = 'Command description';
-
-
+    protected $type = 'Route';
+    protected function getStub(){}
     public function handle(): int
     {
         try {
@@ -89,7 +80,10 @@ class DomainMakeCommand extends Command
             'routes',
             'Http/Controllers',
             'Http/Middleware',
-            'Http/Requests'
+            'Http/Requests',
+            'resources/views',
+            'resources/css',
+            'resources/js',
         ];
 
         foreach($folders as $folder){
@@ -105,9 +99,44 @@ class DomainMakeCommand extends Command
     protected function createController()
     {
         $domain = Str::studly(class_basename($this->argument('domain')));
-        $name = !empty($this->argument('name')) ? Str::studly(class_basename($this->argument('name'))) : $domain;
+        $wantsController = $this->option('controller');
 
-        $this->call('domain:make:controller', ['domain' => $domain, 'name' => "{$domain}Controller"]);
-        $this->call('domain:make:routes', ['domain' => $domain, 'name' => $name]);
+        $routesOptions = $this->getRoutesOptions($domain, $wantsController);
+
+        if ($wantsController) {
+            $controllerOptions = $this->getControllerOptions($domain, $wantsController);
+            $this->call('domain:make:controller', $controllerOptions);
+        }
+
+        $this->call('domain:make:routes', $routesOptions);
+    }
+
+    protected function getControllerOptions(string $domain): array
+    {
+        return ['domain' => $domain, 'name' => "{$domain}Controller"];
+    }
+
+    protected function getRoutesOptions(string $domain, $wantsController): array
+    {
+        if ($wantsController){
+
+            return ['domain' => $domain, 'name' => $domain, "--controller" => "{$domain}Controller"];
+        }
+
+        return ['domain' => $domain, 'name' => $domain];
+    }
+
+    protected function getOptions()
+    {
+        return [
+            ['controller', 'c', InputOption::VALUE_OPTIONAL, 'Generate a nested resource controller class.'],
+        ];
+    }
+
+    protected function getArguments()
+    {
+        return [
+            ['domain', InputArgument::REQUIRED, 'name of domain.'],
+        ];
     }
 }

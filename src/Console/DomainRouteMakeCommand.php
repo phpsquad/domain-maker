@@ -2,10 +2,11 @@
 
 namespace PhpSquad\DomainMaker\Console;
 
-use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Console\GeneratorCommand as command;
+use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class DomainRouteMakeCommand extends command
 {
@@ -19,14 +20,20 @@ class DomainRouteMakeCommand extends command
     {
         $stub = "/stubs/routes.stub";
 
+        if ($this->option('controller')){
+            $stub = "/stubs/routes-with-controller.stub";
+        }
+
         return $this->resolveStubPath($stub);
     }
 
     protected function resolveStubPath($stub): string
     {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
-            : __DIR__ . $stub;
+        $localPath = __DIR__ . '/src' . $stub;
+        $publishedPath = $this->laravel->basePath(trim($stub, '/'));
+        return file_exists($publishedPath)
+            ? $publishedPath
+            : $localPath;
     }
 
     protected function getDefaultNamespace($rootNamespace): string
@@ -38,13 +45,13 @@ class DomainRouteMakeCommand extends command
 
     protected function buildClass($name)
     {
-
         $domain = $this->argument('domain');
         $prefix = Str::lower($domain);
         $domain = Str::studly($domain);
         $controller = $domain . 'Controller';
 
         $name = $this->argument('name');
+        $wantsController = $this->option('controller');
 
         if (!empty($name)) {
             $prefix = Str::lower($name);
@@ -52,6 +59,9 @@ class DomainRouteMakeCommand extends command
             $controller = $name . 'Controller';
         }
 
+        if ($wantsController){
+            $controller = Str::studly($wantsController);
+        }
 
         $replace = [
             '{{DummyPrefix}}' => $prefix,
@@ -68,7 +78,14 @@ class DomainRouteMakeCommand extends command
     {
         return [
             ['domain', InputArgument::REQUIRED, 'The domain of the class'],
-            ['name', InputArgument::OPTIONAL, 'The name of the class'],
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
+        ];
+    }
+
+    protected function getOptions()
+    {
+        return [
+            ['controller', 'c', InputOption::VALUE_OPTIONAL, 'Generate a nested resource controller class.'],
         ];
     }
 }

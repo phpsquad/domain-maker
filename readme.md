@@ -1,21 +1,120 @@
-# domain-maker
+# Domain Maker for Laravel
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Travis](https://img.shields.io/travis/phpSquad/domain-maker.svg?style=flat-square)]()
-[![Total Downloads](https://img.shields.io/packagist/dt/phpSquad/domain-maker.svg?style=flat-square)](https://packagist.org/packages/phpSquad/domain-maker)
+
+## The Why
+Domain Driven Design helps us to organize our thoughts and to build apps using logical grouping of our code. 
+
+If you've ever worked on a large laravel project you know how that model directory can grow so large that your ability to find things becomes hampered. 
+
+I was inspired by this article https://freek.dev/1486-getting-started-with-domain-oriented-laravel from Freek at Spatie to refactor to Domains. 
+I love it! It makes it so much easier to focus on a specific issue without the need to traverse the entire code base. 
+If I'm working on Payments, I live in the payments Domain.  
+
+I soon realized refactoring to DDD is pretty straight forward, but the typically wonderful development experience I've grown used to with laravel
+left a bit to be desired. 
+
+Also, what if I know my project is going to be large, and I want to get a head start and begin development using DDD?
+
+That's why this package exists. 
+
+
+
+## How can Domain Maker help you?
+Domain Maker makes Domain Driven Development easier in Laravel by providing you with a set of commands to create the scaffolding and boilerplate 
+laravel normally provides but tailored to a Domain Oriented Structure. 
+
+* Helpful Commands to:
+  * Automatically scaffold a new Domain with the often needed directories and classes
+  * create controllers
+  * create route files
+* Automatic Routes discovery (no need to register routes in the RouteServiceProvider)
+*
+
+### All Domain Maker Commands are under the prefix domain.
+
+```bash
+ domain:make:controller        Create a new controller class
+ domain:make:domain            Create a new Domain
+ domain:make:routes            Create a new routes for domain
+ ...
+```
 
 ## Install
-`composer require phpSquad/domain-maker`
+```bash
+composer require phpsquad/domain-maker
+```
 
 ## Usage
-Write a few lines about the usage of this package.
 
-## Testing
-Run the tests with:
-
-``` bash
-vendor/bin/phpunit
+### Create new Domain
+```bash
+php artisan domain:make:domain
 ```
+If this is the first domain the Domains directory will be created under app/Domains along with the specified domain. 
+
+```Bash
+Domains
+├── Invoice
+│   ├── Http
+│   │   ├── Controllers
+│   │   │   └── InvoiceController.php
+│   │   ├── Middleware
+│   │   └── Requests
+│   ├── Models
+│   ├── Repositories
+│   └── routes
+│       └── Invoice.php
+└── Media
+    ├── Http
+    │   ├── Controllers
+    │   │   └── MediaController.php
+    │   ├── Middleware
+    │   └── Requests
+    ├── Models
+    ├── Repositories
+    └── routes
+        └── Media.php
+
+```
+
+
+### Routing
+A standard route file is created when you create a domain via the `domain:make:domain` command. 
+>Routes are discovered automatically via the DomainRouteServiceProvider
+
+To create subsequent route files use:
+
+```bash
+domain:make:routes  <domain-name> <route-file-name>
+```
+For example, if I have a "Payments" domain, and I'd like to group my Stripe Routes I'd run the command like so:
+
+```bash
+domain:make:routes Payments Stripe
+```
+
+### Stubs
+Public stubs will be used as a default. If stubs are unpublished, backups are contained in the package. 
+
+There are package specific stubs that you may publish to override (i.e., routes.stub)
+
+> If you don't need to make changes to the stubs it's not necessary to publish them. 
+```bash
+php artisan vendor:publish --tag=domain-stubs
+```
+### Views
+If you'd like to auto-register views you need to replace the standard view provider in config.app.php
+
+replace:
+```
+Illuminate\View\ViewServiceProvider::class,
+```
+with:
+```
+PhpSquad\DomainMaker\ViewProvider::class,
+```
+
 
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
@@ -25,8 +124,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
-- [Richard Rohrig](https://github.com/phpSquad)
-- [All Contributors](https://github.com/phpSquad/domain-maker/contributors)
+- [Richard Rohrig](https://github.com/phpsquad)
+- [All Contributors](https://github.com/phpsquad/domain-maker/contributors)
 
 ## Security
 If you discover any security-related issues, please email rick@wambo.com instead of using the issue tracker.
