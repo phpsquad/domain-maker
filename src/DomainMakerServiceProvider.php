@@ -34,5 +34,9 @@ class DomainMakerServiceProvider extends ServiceProvider
                 DomainRouteMakeCommand::class,
             ]);
         }
+
+        $this->publishes([
+            __DIR__.'/stubs/routes.stub' => base_path('stubs/routes.stub')
+        ], 'domain-stubs');
     }
 }

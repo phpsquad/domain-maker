@@ -66,6 +66,15 @@ For example, if I have a "Payments" domain, and I'd like to group my Stripe Rout
 domain:make:routes Payments Stripe
 ```
 
+### Stubs
+Public stubs will be used as a default. If stubs are unpublished, backups are contained in the package. 
+
+There are package specific stubs that you may publish to override (i.e., routes.stub)
+
+> If you don't need to make changes to the stubs it's not necessary to publish them. 
+```bash
+php artisan vendor:publish --tag=domain-stubs
+```
 
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
