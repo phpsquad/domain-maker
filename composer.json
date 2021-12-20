@@ -1,0 +1,42 @@
+{
+    "name": "phpsquad/domain-maker",
+    "description": "A description for domain-maker.",
+    "type": "package",
+    "license": "MIT",
+    "keywords": [
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "Richard Rohrig",
+            "email": "rick@wambo.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpSquad\\DomainMaker\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpSquad\\DomainMaker\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PhpSquad\\DomainMaker\\DomainMakerServiceProvider",
+                "PhpSquad\\DomainMaker\\DomainRouteServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0"
+    }
+}

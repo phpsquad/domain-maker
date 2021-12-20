@@ -1,0 +1,38 @@
+<?php
+
+namespace PhpSquad\DomainMaker;
+
+use Illuminate\Support\ServiceProvider;
+use PhpSquad\DomainMaker\Console\DomainControllerMakeCommand;
+use PhpSquad\DomainMaker\Console\DomainMakeCommand;
+use PhpSquad\DomainMaker\Console\DomainRouteMakeCommand;
+
+
+class DomainMakerServiceProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                DomainMakeCommand::class,
+                DomainControllerMakeCommand::class,
+                DomainRouteMakeCommand::class,
+            ]);
+        }
+    }
+}
