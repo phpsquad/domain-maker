@@ -1,14 +1,35 @@
-# domain-maker
+# Domain Maker for Laravel
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 
-## Install
-```bash
-composer require phpsquad/domain-maker
-```
+## The Why
+Domain Driven Design helps us to organize our thoughts and to build apps using logically grouping of our code. 
 
-## Usage
-The package makes Domain Driven Development easier in Laravel. 
+If you've ever worked on a large laravel project you know how that model directory can grow so large that your ability to find things becomes hampered. 
+
+I was inspired by this article https://freek.dev/1486-getting-started-with-domain-oriented-laravel from Freek at Spatie to refactor to Domains. 
+I love it! It makes it so much easier to focus on a specific issue without the need to traverse the entire code base. 
+If I'm working on Payment, I live in the payments Domain.  
+
+I soon realized refactoring to DDD is pretty straight forward, but the typically wonderful development experience I've grown used to with laravel
+left a bit to be desired. 
+
+Also, what if I know my project is going to be large, and I want to get a head start and being my development using DDD?
+
+That's why this package exists. 
+
+
+
+## How can Domain Maker help you?
+Domain Maker makes Domain Driven Development easier in Laravel by providing you with a set of commands to create the scaffolding and boilerplate 
+laravel normally provides but tailored to a Domain Oriented Structure. 
+
+* Helpful Commands to:
+  * Automatically scaffold a new Domain with the often needed directories and classes
+  * create controllers
+  * create route files
+* Automatic Routes discovery (no need to register routes in the RouteServiceProvider)
+*
 
 ### All Domain Maker Commands are under the prefix domain.
 
@@ -18,6 +39,13 @@ The package makes Domain Driven Development easier in Laravel.
  domain:make:routes            Create a new routes for domain
  ...
 ```
+
+## Install
+```bash
+composer require phpsquad/domain-maker
+```
+
+## Usage
 
 ### Create new Domain
 ```bash
@@ -52,7 +80,7 @@ Domains
 
 
 ### Routing
-A standard route file is created when you create a domain via the command. 
+A standard route file is created when you create a domain via the `domain:make:domain` command. 
 >Routes are discovered automatically via the DomainRouteServiceProvider
 
 To create subsequent route files use:
