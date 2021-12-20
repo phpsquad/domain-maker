@@ -1,6 +1,6 @@
 {
     "name": "phpsquad/domain-maker",
-    "description": "A description for domain-maker.",
+    "description": "Domain Driven Design for Laravel made easy",
     "type": "package",
     "license": "MIT",
     "keywords": [
