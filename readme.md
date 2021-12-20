@@ -3,18 +3,18 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 
 ## The Why
-Domain Driven Design helps us to organize our thoughts and to build apps using logically grouping of our code. 
+Domain Driven Design helps us to organize our thoughts and to build apps using logical grouping of our code. 
 
 If you've ever worked on a large laravel project you know how that model directory can grow so large that your ability to find things becomes hampered. 
 
 I was inspired by this article https://freek.dev/1486-getting-started-with-domain-oriented-laravel from Freek at Spatie to refactor to Domains. 
 I love it! It makes it so much easier to focus on a specific issue without the need to traverse the entire code base. 
-If I'm working on Payment, I live in the payments Domain.  
+If I'm working on Payments, I live in the payments Domain.  
 
 I soon realized refactoring to DDD is pretty straight forward, but the typically wonderful development experience I've grown used to with laravel
 left a bit to be desired. 
 
-Also, what if I know my project is going to be large, and I want to get a head start and being my development using DDD?
+Also, what if I know my project is going to be large, and I want to get a head start and begin development using DDD?
 
 That's why this package exists. 
 
