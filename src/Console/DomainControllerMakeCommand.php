@@ -34,6 +34,8 @@ class DomainControllerMakeCommand extends GeneratorCommand
      */
     protected $type = 'Controller';
 
+    protected $domain = '';
+
     /**
      * Get the stub file for the generator.
      *
@@ -89,10 +91,29 @@ class DomainControllerMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        $domainName = Str::studly($this->argument('domain'));
-        $path = $rootNamespace . '\Domains\\' . $domainName. '\Http\Controllers';
+        $this->domain = Str::studly($this->argument('domain'));
+        $path = $rootNamespace . '\Domains\\' . $this->domain . '\Http\Controllers';
         return $path;
     }
+
+    protected function getDefaultModelNamespace($rootNamespace)
+    {
+        $this->domain = Str::studly($this->argument('domain'));
+        $path = $rootNamespace . 'Domains\\' . $this->domain . '\Models';
+        return $path;
+    }
+
+    protected function qualifyModel(string $model)
+    {
+        $model = ltrim($model, '\\/');
+
+        $model = str_replace('/', '\\', $model);
+
+        $rootNamespace = $this->rootNamespace();
+
+        return $this->getDefaultModelNamespace($rootNamespace) . '\\' . $model;
+    }
+
 
     /**
      * Build the class with the given name.
@@ -134,7 +155,7 @@ class DomainControllerMakeCommand extends GeneratorCommand
 
         if (! class_exists($parentModelClass)) {
             if ($this->confirm("A {$parentModelClass} model does not exist. Do you want to generate it?", true)) {
-                $this->call('make:model', ['name' => $parentModelClass]);
+                $this->call('domain:make:model', ['name' => $parentModelClass]);
             }
         }
 
@@ -163,7 +184,7 @@ class DomainControllerMakeCommand extends GeneratorCommand
 
         if (! class_exists($modelClass)) {
             if ($this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
-                $this->call('make:model', ['name' => $modelClass]);
+                $this->call('domain:make:model', ['domain' => $this->domain, 'name' => $modelClass]);
             }
         }
 

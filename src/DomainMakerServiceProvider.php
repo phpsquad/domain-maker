@@ -5,6 +5,7 @@ namespace PhpSquad\DomainMaker;
 use Illuminate\Support\ServiceProvider;
 use PhpSquad\DomainMaker\Console\DomainControllerMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainMakeCommand;
+use PhpSquad\DomainMaker\Console\DomainModelMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainRouteMakeCommand;
 
 
@@ -32,6 +33,7 @@ class DomainMakerServiceProvider extends ServiceProvider
                 DomainMakeCommand::class,
                 DomainControllerMakeCommand::class,
                 DomainRouteMakeCommand::class,
+                DomainModelMakeCommand::class
             ]);
         }
 
