@@ -78,7 +78,7 @@ class DomainRouteMakeCommand extends command
     {
         return [
             ['domain', InputArgument::REQUIRED, 'The domain of the class'],
-            ['name', InputArgument::OPTIONAL, 'The name of the class'],
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
         ];
     }
 

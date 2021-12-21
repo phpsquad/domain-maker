@@ -101,14 +101,14 @@ class DomainMakeCommand extends Command
         $routesOptions = $this->getRoutesOptions($domain, $wantsController);
 
         if ($wantsController) {
-            $controllerOptions = $this->getContollerOptions($domain, $wantsController);
+            $controllerOptions = $this->getControllerOptions($domain, $wantsController);
             $this->call('domain:make:controller', $controllerOptions);
         }
 
         $this->call('domain:make:routes', $routesOptions);
     }
 
-    protected function getContollerOptions(string $domain, $wantsController): array
+    protected function getControllerOptions(string $domain): array
     {
         return ['domain' => $domain, 'name' => "{$domain}Controller"];
     }
