@@ -62,7 +62,7 @@ class DomainModelMakeCommand extends GeneratorCommand
     {
         $factory = Str::studly($this->argument('name'));
 
-        $this->call('make:factory', [
+        $this->call('domain:make:factory', [
             'name' => "{$factory}Factory",
             '--model' => $this->qualifyClass($this->getNameInput()),
         ]);
@@ -81,7 +81,7 @@ class DomainModelMakeCommand extends GeneratorCommand
             $table = Str::singular($table);
         }
 
-        $this->call('make:migration', [
+        $this->call('domain:make:migration', [
             'name' => "create_{$table}_table",
             '--create' => $table,
         ]);
@@ -96,7 +96,7 @@ class DomainModelMakeCommand extends GeneratorCommand
     {
         $seeder = Str::studly(class_basename($this->argument('name')));
 
-        $this->call('make:seeder', [
+        $this->call('domain:make:seeder', [
             'name' => "{$seeder}Seeder",
         ]);
     }
@@ -130,7 +130,7 @@ class DomainModelMakeCommand extends GeneratorCommand
     {
         $policy = Str::studly(class_basename($this->argument('name')));
 
-        $this->call('make:policy', [
+        $this->call('domain:make:policy', [
             'name' => "{$policy}Policy",
             '--model' => $this->qualifyClass($this->getNameInput()),
         ]);

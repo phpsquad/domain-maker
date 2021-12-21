@@ -34,7 +34,7 @@ class DomainControllerMakeCommand extends GeneratorCommand
      */
     protected $type = 'Controller';
 
-    protected $domain = '';
+    protected $domain;
 
     /**
      * Get the stub file for the generator.
@@ -273,14 +273,16 @@ class DomainControllerMakeCommand extends GeneratorCommand
     {
         $storeRequestClass = 'Store'.class_basename($modelClass).'Request';
 
-        $this->call('make:request', [
+        $this->call('domain:make:request', [
             'name' => $storeRequestClass,
+            'domain' => $this->domain
         ]);
 
         $updateRequestClass = 'Update'.class_basename($modelClass).'Request';
 
-        $this->call('make:request', [
+        $this->call('domain:make:request', [
             'name' => $updateRequestClass,
+            'domain' => $this->domain
         ]);
 
         return [$storeRequestClass, $updateRequestClass];
