@@ -15,6 +15,7 @@ class DomainModelMakeCommand extends GeneratorCommand
     protected $name = 'domain:make:model';
     protected $description = 'Create a new Domain Eloquent model class';
     protected $type = 'Model';
+    protected $domain;
 
     public function handle()
     {
@@ -111,8 +112,9 @@ class DomainModelMakeCommand extends GeneratorCommand
 
         $modelName = $this->qualifyClass($this->getNameInput());
 
-        $this->call('make:controller', array_filter([
+        $this->call('domain:make:controller', array_filter([
             'name' => "{$controller}Controller",
+            'domain' => $this->domain,
             '--model' => $this->option('resource') || $this->option('api') ? $modelName : null,
             '--api' => $this->option('api'),
             '--requests' => $this->option('requests') || $this->option('all'),
@@ -167,8 +169,8 @@ class DomainModelMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        $domainName = Str::studly($this->argument('domain'));
-        return $rootNamespace . '\Domains\\' . $domainName.'\\Models';
+        $this->domain = Str::studly($this->argument('domain'));
+        return $rootNamespace . '\Domains\\' . $this->domain.'\\Models';
     }
 
     protected function qualifyModel(string $model)
