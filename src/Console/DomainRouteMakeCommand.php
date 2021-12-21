@@ -2,8 +2,8 @@
 
 namespace PhpSquad\DomainMaker\Console;
 
-use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Console\GeneratorCommand as command;
+use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;

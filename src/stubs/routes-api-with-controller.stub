@@ -1,0 +1,10 @@
+<?php
+
+use App\Domains\{{DummyDomain}}\Http\Controllers\{{DummyController}};
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('api')->middleware('api')->prefix('{{DummyPrefix}}')->group(function () {
+    Route::resource('/', {{DummyController}}::class);
+});
+
+

@@ -16,7 +16,6 @@ class DomainRouteServiceProvider extends ServiceProvider
 
     public function registerDomainRoutes()
     {
-
         if (!file_exists(base_path('app/Domains'))) {
             return;
         };
@@ -33,9 +32,7 @@ class DomainRouteServiceProvider extends ServiceProvider
 
             $domainRouteFiles = array_diff(scandir(base_path('app/Domains/' . $domain . '/routes')), array('.', '..'));
             foreach ($domainRouteFiles as $file) {
-                Route::prefix('api')
-                    ->middleware('api')
-                    ->namespace($this->namespace)
+                Route::namespace($this->namespace)
                     ->group(base_path('app/Domains/' . $domain . '/routes/' . $file));
             }
         }
