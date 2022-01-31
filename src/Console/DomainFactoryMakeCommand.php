@@ -46,9 +46,11 @@ class DomainFactoryMakeCommand extends DomainGeneratorCommand
      */
     protected function resolveStubPath($stub)
     {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
-            : __DIR__.$stub;
+        $localPath = __DIR__ . '/..' . $stub;
+        $publishedPath = $this->laravel->basePath(trim($stub, '/'));
+        return file_exists($publishedPath)
+            ? $publishedPath
+            : $localPath;
     }
 
     /**
@@ -62,13 +64,13 @@ class DomainFactoryMakeCommand extends DomainGeneratorCommand
         $factory = class_basename(Str::ucfirst(str_replace('Factory', '', $name)));
 
         $namespaceModel = $this->option('model')
-                        ? $this->qualifyModel($this->option('model'))
-                        : $this->qualifyModel($this->guessModelName($name));
+            ? $this->qualifyModel($this->option('model'))
+            : $this->qualifyModel($this->guessModelName($name));
 
         $model = class_basename($namespaceModel);
 
-        if (Str::startsWith($namespaceModel, $this->rootNamespace().'Models')) {
-            $namespace = Str::beforeLast('Database\\Factories\\'.Str::after($namespaceModel, $this->rootNamespace().'Models\\'), '\\');
+        if (Str::startsWith($namespaceModel, $this->rootNamespace() . 'Models')) {
+            $namespace = Str::beforeLast('Database\\Factories\\' . Str::after($namespaceModel, $this->rootNamespace() . 'Models\\'), '\\');
         } else {
             $namespace = 'Database\\Factories';
         }
@@ -86,7 +88,9 @@ class DomainFactoryMakeCommand extends DomainGeneratorCommand
         ];
 
         return str_replace(
-            array_keys($replace), array_values($replace), parent::buildClass($name)
+            array_keys($replace),
+            array_values($replace),
+            parent::buildClass($name)
         );
     }
 
@@ -100,7 +104,7 @@ class DomainFactoryMakeCommand extends DomainGeneratorCommand
     {
         $name = (string) Str::of($name)->replaceFirst($this->rootNamespace(), '')->finish('Factory');
 
-        return $this->laravel->databasePath().'/factories/'.str_replace('\\', '/', $name).'.php';
+        return $this->laravel->databasePath() . '/factories/' . str_replace('\\', '/', $name) . '.php';
     }
 
     /**
@@ -122,10 +126,10 @@ class DomainFactoryMakeCommand extends DomainGeneratorCommand
         }
 
         if (is_dir(app_path('Models/'))) {
-            return $this->rootNamespace().'Models\Model';
+            return $this->rootNamespace() . 'Models\Model';
         }
 
-        return $this->rootNamespace().'Model';
+        return $this->rootNamespace() . 'Model';
     }
 
     /**

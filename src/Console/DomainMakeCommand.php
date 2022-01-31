@@ -12,7 +12,9 @@ class DomainMakeCommand extends Command
     protected $name = 'domain:make:domain';
     protected $description = 'Command description';
     protected $type = 'Route';
-    protected function getStub(){}
+    protected function getStub()
+    {
+    }
     public function handle(): int
     {
         try {
@@ -37,12 +39,12 @@ class DomainMakeCommand extends Command
 
             $appDirExists = file_exists($appDir);
 
-            if ($appDirExists){
+            if ($appDirExists) {
                 break;
             }
         }
 
-        if (!$appDirExists){
+        if (!$appDirExists) {
             throw new \Exception('Could not find app directory! Command must be with in subdirectory of app');
         }
 
@@ -56,7 +58,7 @@ class DomainMakeCommand extends Command
         $domainDir = $appDir . '/Domains';
         $domainDirExists = file_exists($domainDir);
 
-        if (!$domainDirExists){
+        if (!$domainDirExists) {
             mkdir($domainDir);
         }
 
@@ -68,22 +70,26 @@ class DomainMakeCommand extends Command
         $newDomainDir = $domainsDir . '/' . $domain;
         $alreadyExists = file_exists($newDomainDir);
 
-        if ($alreadyExists){
+        if ($alreadyExists) {
             throw new \Exception($domain . ' domain already exists! Will not overwrite existing domain.');
         }
 
         mkdir($newDomainDir);
 
         $folders = [
-            'Repositories',
-            'Models',
-            'routes',
             'Http/Controllers',
             'Http/Middleware',
-            'Http/Requests'
+            'Http/Requests',
+            'Http/Resources',
+            'Repositories',
+            'Models',
+            'Routes',
+            'Exceptions',
+            'Jobs',
+            'Services',
         ];
 
-        foreach($folders as $folder){
+        foreach ($folders as $folder) {
             $newFolder = $newDomainDir . '/' . $folder;
             mkdir($newFolder, 0777, true);
         }
@@ -115,7 +121,7 @@ class DomainMakeCommand extends Command
 
     protected function getRoutesOptions(string $domain, $wantsController): array
     {
-        if ($wantsController){
+        if ($wantsController) {
 
             return ['domain' => $domain, 'name' => $domain, "--controller" => "{$domain}Controller"];
         }

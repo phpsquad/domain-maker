@@ -2,13 +2,13 @@
 
 namespace PhpSquad\DomainMaker\Console;
 
-use Illuminate\Console\GeneratorCommand as command;
+use Illuminate\Console\GeneratorCommand;
 use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class DomainRouteMakeCommand extends command
+class DomainRouteMakeCommand extends GeneratorCommand
 {
     use CreatesMatchingTest;
 
@@ -20,7 +20,7 @@ class DomainRouteMakeCommand extends command
     {
         $stub = "/stubs/routes.stub";
 
-        if ($this->option('controller')){
+        if ($this->option('controller')) {
             $stub = "/stubs/routes-with-controller.stub";
         }
 
@@ -40,7 +40,7 @@ class DomainRouteMakeCommand extends command
     {
         $domain = $this->argument('domain');
 
-        return $rootNamespace . '\Domains\\' . $domain . '\routes';
+        return $rootNamespace . '\Domains\\' . $domain . '\Routes';
     }
 
     protected function buildClass($name)
@@ -59,7 +59,7 @@ class DomainRouteMakeCommand extends command
             $controller = $name . 'Controller';
         }
 
-        if ($wantsController){
+        if ($wantsController) {
             $controller = Str::studly($wantsController);
         }
 
@@ -70,7 +70,9 @@ class DomainRouteMakeCommand extends command
         ];
 
         return str_replace(
-            array_keys($replace), array_values($replace), parent::buildClass($name)
+            array_keys($replace),
+            array_values($replace),
+            parent::buildClass($name)
         );
     }
 
