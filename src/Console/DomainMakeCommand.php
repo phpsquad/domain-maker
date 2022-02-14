@@ -80,7 +80,8 @@ class DomainMakeCommand extends Command
             'routes',
             'Http/Controllers',
             'Http/Middleware',
-            'Http/Requests'
+            'Http/Requests',
+            'views'
         ];
 
         foreach($folders as $folder){
