@@ -1,4 +1,4 @@
 /vendor
 .env
 .phpunit.result.cache
-.idea/
+domain-maker/.idea/

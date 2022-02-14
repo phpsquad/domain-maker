@@ -29,7 +29,7 @@ class DomainRouteMakeCommand extends command
 
     protected function resolveStubPath($stub): string
     {
-        $localPath = __DIR__ . '/..' . $stub;
+        $localPath = __DIR__ . '/src' . $stub;
         $publishedPath = $this->laravel->basePath(trim($stub, '/'));
         return file_exists($publishedPath)
             ? $publishedPath
