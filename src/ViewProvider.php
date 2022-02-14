@@ -44,7 +44,7 @@ class ViewProvider extends ServiceProvider
 
         foreach ($domains as $domain) {
             $dirs = array_diff(scandir(base_path('app/Domains/' . $domain)), array('.', '..'));
-            $routesDirExists = in_array('views', $dirs);
+            $routesDirExists = in_array('resources/views', $dirs);
             if (!$routesDirExists) {
                 Log::info("$domain Domain missing views directory. Can't register views");
                 continue;
