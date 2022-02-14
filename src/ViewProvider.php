@@ -50,7 +50,7 @@ class ViewProvider extends ServiceProvider
                 continue;
             }
 
-            $viewPaths[] = base_path('app/Domains/' . $domain . '/views');
+            $viewPaths[] = base_path('app/Domains/' . $domain . '/resources/views');
         }
 
         return $viewPaths;

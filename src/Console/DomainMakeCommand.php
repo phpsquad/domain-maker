@@ -81,7 +81,9 @@ class DomainMakeCommand extends Command
             'Http/Controllers',
             'Http/Middleware',
             'Http/Requests',
-            'views'
+            'resources/views',
+            'resources/css',
+            'resources/js',
         ];
 
         foreach($folders as $folder){
