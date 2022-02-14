@@ -32,7 +32,8 @@
         "laravel": {
             "providers": [
                 "PhpSquad\\DomainMaker\\DomainMakerServiceProvider",
-                "PhpSquad\\DomainMaker\\DomainRouteServiceProvider"
+                "PhpSquad\\DomainMaker\\DomainRouteServiceProvider",
+                "PhpSquad\\DomainMaker\\ViewProvider"
             ]
         }
     },
