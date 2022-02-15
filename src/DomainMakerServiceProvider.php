@@ -2,10 +2,12 @@
 
 namespace PhpSquad\DomainMaker;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 use PhpSquad\DomainMaker\Console\DomainControllerMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainFactoryMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainMakeCommand;
+use PhpSquad\DomainMaker\Console\DomainMigrateCommand;
 use PhpSquad\DomainMaker\Console\DomainModelMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainRequestMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainRouteMakeCommand;
@@ -13,21 +15,14 @@ use PhpSquad\DomainMaker\Console\DomainRouteMakeCommand;
 
 class DomainMakerServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
+
     public function register()
     {
-        //
+        $this->app->singleton(DomainMigrateCommand::class, function ($app) {
+            return new DomainMigrateCommand($app['migrator'], new \Illuminate\Events\Dispatcher($app));
+        });
     }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
     public function boot()
     {
         if ($this->app->runningInConsole()) {
@@ -37,7 +32,8 @@ class DomainMakerServiceProvider extends ServiceProvider
                 DomainRouteMakeCommand::class,
                 DomainModelMakeCommand::class,
                 DomainFactoryMakeCommand::class,
-                DomainRequestMakeCommand::class
+                DomainRequestMakeCommand::class,
+                DomainMigrateCommand::class
             ]);
         }
 
