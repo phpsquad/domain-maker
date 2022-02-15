@@ -48,7 +48,7 @@ class DomainMigrateCommand extends MigrateCommand
         foreach ($domainPaths as $domainPath) {
           $this->info($domainPath);
         }
-
+        //todo: add migrations paths
         return [];
     }
 }
