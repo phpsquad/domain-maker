@@ -38,7 +38,10 @@ class DomainMakerServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/stubs/routes.stub' => base_path('stubs/routes.stub')
+            __DIR__.'/stubs/routes.stub' => base_path('stubs/routes.stub'),
+            __DIR__.'/stubs/routes-api-with-controller.stub' => base_path('stubs/routes-api-with-controller.stub'),
+            __DIR__.'/stubs/routes-api-with-controller.stub' => base_path('stubs/routes-api-with-controller.stub'),
+            __DIR__.'/stubs/routes-with-controller.stub' => base_path('stubs/routes-with-controller.stub'),
         ], 'domain-stubs');
     }
 }
