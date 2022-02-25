@@ -21,13 +21,18 @@ class ViewProvider extends ServiceProvider
   {
     $domainMakerViews =  $this->getDomainViewPaths();
 
+
+
     $this->app->bind('view.finder', function ($app) use ($domainMakerViews) {
 
       $paths = $app['config']['view.paths'];
 
-      foreach ($domainMakerViews as $path) {
-        $paths[] = $path;
+      if ($domainMakerViews){
+          foreach ($domainMakerViews as $path) {
+              $paths[] = $path;
+          }
       }
+
 
       return new FileViewFinder($app['files'], $paths);
     });
