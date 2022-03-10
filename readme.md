@@ -60,34 +60,32 @@ If this is the first domain the Domains directory will be created under app/Doma
 
 ```Bash
 Domains
-├── Invoice
-│   ├── Exceptions
-│   ├── Http
-│   │   ├── Controllers
-│   │   │   └── InvoiceController.php
-│   │   ├── Middleware
-│   │   └── Requests
-│   │   └── Resources
-│   ├── Jobs
-│   ├── Models
-│   ├── Repositories
-│   └── Routes
-│       └── Invoice.php
-│   ├── Services
 └── Media
-│   ├── Exceptions
-│   ├── Http
-│   │   ├── Controllers
-│   │   │   └── InvoiceController.php
-│   │   ├── Middleware
-│   │   └── Requests
-│   │   └── Resources
-│   ├── Jobs
-│   ├── Models
-│   ├── Repositories
-|   └── Routes
-|       └── Media.php
-│   ├── Services
+    ├── Exceptions
+    ├── Http
+    │   ├── Controllers
+    │   │   ├── VimeoController.php
+    │   │   └── YoutubeController.php
+    │   ├── Middleware
+    │   └── Requests
+    │       └── YoutubeRequest.php
+    ├── Jobs
+    │   └── YoutubeSync.php
+    ├── Models
+    │   └── Youtube.php
+    ├── Repositories
+    │   └── YoutubeRepository.php
+    ├── resources
+    │   ├── css
+    │   ├── js
+    │   └── views
+    │       └── youtube-home.blade.php
+    ├── routes
+    │   ├── Media.php
+    │   ├── Vimeo.php
+    │   └── Youtube.php
+    └── Services
+
 
 ```
 
