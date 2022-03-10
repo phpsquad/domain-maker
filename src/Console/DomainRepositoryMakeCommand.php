@@ -15,9 +15,6 @@ class DomainRepositoryMakeCommand extends GeneratorCommand
     protected string $domain;
     protected string $model;
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $path = $this->getSourceFilePath();
@@ -43,6 +40,7 @@ class DomainRepositoryMakeCommand extends GeneratorCommand
     {
         $localPath = __DIR__ . '/..' . $stub;
         $publishedPath = $this->laravel->basePath(trim($stub, '/'));
+
         return file_exists($publishedPath)
             ? $publishedPath
             : $localPath;
@@ -52,6 +50,7 @@ class DomainRepositoryMakeCommand extends GeneratorCommand
     {
         $rootNamespace = $this->laravel->getNamespace();
         $this->domain = Str::studly($this->argument('domain'));
+
         return $rootNamespace . 'Domains\\' . $this->argument("domain") . '\Repositories';
     }
 
@@ -69,17 +68,15 @@ class DomainRepositoryMakeCommand extends GeneratorCommand
         $filename = $this->argument("name");
         $domain = $this->argument("domain");
 
-        $path =  base_path("app/Domains/$domain/Repositories/$filename.php");
-
-        return $path;
+        return base_path("app/Domains/$domain/Repositories/$filename.php");
     }
 
-    public function getSourceFile(): bool|array|string
+    public function getSourceFile()
     {
         return $this->getStubContents($this->getStub(), $this->getStubVariables());
     }
 
-    public function getStubContents($stub, $stubVariables = []): array|bool|string
+    public function getStubContents($stub, $stubVariables = [])
     {
         $contents = file_get_contents($stub);
 
