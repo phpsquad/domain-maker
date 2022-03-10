@@ -40,7 +40,7 @@ class DomainRouteMakeCommand extends GeneratorCommand
     {
         $domain = $this->argument('domain');
 
-        return $rootNamespace . '\Domains\\' . $domain . '\Routes';
+        return $rootNamespace . '\Domains\\' . $domain . '\routes';
     }
 
     protected function buildClass($name)

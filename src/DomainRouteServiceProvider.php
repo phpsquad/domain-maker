@@ -24,16 +24,16 @@ class DomainRouteServiceProvider extends ServiceProvider
 
         foreach ($domains as $domain) {
             $dirs = array_diff(scandir(base_path('app/Domains/' . $domain)), array('.', '..'));
-            $routesDirExists = in_array('Routes', $dirs);
+            $routesDirExists = in_array('routes', $dirs);
             if (!$routesDirExists) {
                 Log::info("$domain Domain missing routes directory. Can't register routes");
                 continue;
             }
 
-            $domainRouteFiles = array_diff(scandir(base_path('app/Domains/' . $domain . '/Routes')), array('.', '..'));
+            $domainRouteFiles = array_diff(scandir(base_path('app/Domains/' . $domain . '/routes')), array('.', '..'));
             foreach ($domainRouteFiles as $file) {
                 Route::namespace($this->namespace)
-                    ->group(base_path('app/Domains/' . $domain . '/Routes/' . $file));
+                    ->group(base_path('app/Domains/' . $domain . '/routes/' . $file));
             }
         }
     }

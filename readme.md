@@ -28,8 +28,10 @@ laravel normally provides but tailored to a Domain Oriented Structure.
   - Automatically scaffold a new Domain with the often needed directories and classes
   - create controllers
   - create route files
+  - create models
+  - create repositories
 - Automatic Routes discovery (no need to register routes in the RouteServiceProvider)
--
+- Automatic View discovery (no need to add view path to config)
 
 ### All Domain Maker Commands are under the prefix domain.
 
