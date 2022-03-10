@@ -81,7 +81,7 @@ class DomainModelMakeCommand extends GeneratorCommand
             $table = Str::singular($table);
         }
 
-        $this->call('domain:make:migration', [
+        $this->call('make:migration', [
             'name' => "create_{$table}_table",
             '--create' => $table,
         ]);
@@ -151,14 +151,13 @@ class DomainModelMakeCommand extends GeneratorCommand
     /**
      * Resolve the fully-qualified path to the stub.
      *
-     * @param string $stub
+     * @param  string  $stub
      * @return string
      */
     protected function resolveStubPath($stub)
     {
-        $localPath = dirname(__FILE__, 2) .  $stub;
+        $localPath = __DIR__ . '/..' . $stub;
         $publishedPath = $this->laravel->basePath(trim($stub, '/'));
-
         return file_exists($publishedPath)
             ? $publishedPath
             : $localPath;
@@ -173,7 +172,7 @@ class DomainModelMakeCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         $this->domain = Str::studly($this->argument('domain'));
-        return $rootNamespace . '\Domains\\' . $this->domain.'\\Models';
+        return $rootNamespace . '\Domains\\' . $this->domain . '\\Models';
     }
 
     protected function qualifyModel(string $model)
@@ -191,8 +190,8 @@ class DomainModelMakeCommand extends GeneratorCommand
         }
 
         return is_dir(app_path('Models'))
-            ? $rootNamespace.'Models\\'.$model
-            : $rootNamespace.$model;
+            ? $rootNamespace . 'Models\\' . $model
+            : $rootNamespace . $model;
     }
 
     /**
@@ -225,4 +224,3 @@ class DomainModelMakeCommand extends GeneratorCommand
         ];
     }
 }
-

@@ -59,7 +59,7 @@ class DomainControllerMakeCommand extends GeneratorCommand
 
         if ($this->option('api') && is_null($stub)) {
             $stub = '/stubs/controller.api.stub';
-        } elseif ($this->option('api') && ! is_null($stub) && ! $this->option('invokable')) {
+        } elseif ($this->option('api') && !is_null($stub) && !$this->option('invokable')) {
             $stub = str_replace('.stub', '.api.stub', $stub);
         }
 
@@ -76,7 +76,7 @@ class DomainControllerMakeCommand extends GeneratorCommand
      */
     protected function resolveStubPath($stub)
     {
-        $localPath = __DIR__ . '/src' . $stub;
+        $localPath = __DIR__ . '/..' . $stub;
         $publishedPath = $this->laravel->basePath(trim($stub, '/'));
         return file_exists($publishedPath)
             ? $publishedPath
@@ -140,7 +140,9 @@ class DomainControllerMakeCommand extends GeneratorCommand
         $replace["use {$controllerNamespace}\Controller;\n"] = '';
 
         return str_replace(
-            array_keys($replace), array_values($replace), parent::buildClass($name)
+            array_keys($replace),
+            array_values($replace),
+            parent::buildClass($name)
         );
     }
 
@@ -153,7 +155,7 @@ class DomainControllerMakeCommand extends GeneratorCommand
     {
         $parentModelClass = $this->parseModel($this->option('parent'));
 
-        if (! class_exists($parentModelClass)) {
+        if (!class_exists($parentModelClass)) {
             if ($this->confirm("A {$parentModelClass} model does not exist. Do you want to generate it?", true)) {
                 $this->call('domain:make:model', ['name' => $parentModelClass]);
             }
@@ -182,7 +184,7 @@ class DomainControllerMakeCommand extends GeneratorCommand
     {
         $modelClass = $this->parseModel($this->option('model'));
 
-        if (! class_exists($modelClass)) {
+        if (!class_exists($modelClass)) {
             if ($this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
                 $this->call('domain:make:model', ['domain' => $this->domain, 'name' => $modelClass]);
             }
@@ -237,14 +239,16 @@ class DomainControllerMakeCommand extends GeneratorCommand
             $namespace = 'App\\Http\\Requests';
 
             [$storeRequestClass, $updateRequestClass] = $this->generateFormRequests(
-                $modelClass, $storeRequestClass, $updateRequestClass
+                $modelClass,
+                $storeRequestClass,
+                $updateRequestClass
             );
         }
 
-        $namespacedRequests = $namespace.'\\'.$storeRequestClass.';';
+        $namespacedRequests = $namespace . '\\' . $storeRequestClass . ';';
 
         if ($storeRequestClass !== $updateRequestClass) {
-            $namespacedRequests .= PHP_EOL.'use '.$namespace.'\\'.$updateRequestClass.';';
+            $namespacedRequests .= PHP_EOL . 'use ' . $namespace . '\\' . $updateRequestClass . ';';
         }
 
         return array_merge($replace, [
@@ -252,10 +256,10 @@ class DomainControllerMakeCommand extends GeneratorCommand
             '{{storeRequest}}' => $storeRequestClass,
             '{{ updateRequest }}' => $updateRequestClass,
             '{{updateRequest}}' => $updateRequestClass,
-            '{{ namespacedStoreRequest }}' => $namespace.'\\'.$storeRequestClass,
-            '{{namespacedStoreRequest}}' => $namespace.'\\'.$storeRequestClass,
-            '{{ namespacedUpdateRequest }}' => $namespace.'\\'.$updateRequestClass,
-            '{{namespacedUpdateRequest}}' => $namespace.'\\'.$updateRequestClass,
+            '{{ namespacedStoreRequest }}' => $namespace . '\\' . $storeRequestClass,
+            '{{namespacedStoreRequest}}' => $namespace . '\\' . $storeRequestClass,
+            '{{ namespacedUpdateRequest }}' => $namespace . '\\' . $updateRequestClass,
+            '{{namespacedUpdateRequest}}' => $namespace . '\\' . $updateRequestClass,
             '{{ namespacedRequests }}' => $namespacedRequests,
             '{{namespacedRequests}}' => $namespacedRequests,
         ]);
@@ -271,14 +275,14 @@ class DomainControllerMakeCommand extends GeneratorCommand
      */
     protected function generateFormRequests($modelClass, $storeRequestClass, $updateRequestClass)
     {
-        $storeRequestClass = 'Store'.class_basename($modelClass).'Request';
+        $storeRequestClass = 'Store' . class_basename($modelClass) . 'Request';
 
         $this->call('domain:make:request', [
             'name' => $storeRequestClass,
             'domain' => $this->domain
         ]);
 
-        $updateRequestClass = 'Update'.class_basename($modelClass).'Request';
+        $updateRequestClass = 'Update' . class_basename($modelClass) . 'Request';
 
         $this->call('domain:make:request', [
             'name' => $updateRequestClass,

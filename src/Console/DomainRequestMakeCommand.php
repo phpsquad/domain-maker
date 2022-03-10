@@ -15,16 +15,24 @@ class DomainRequestMakeCommand extends DomainGeneratorCommand
         return $this->resolveStubPath('/stubs/request.stub');
     }
 
-    protected function resolveStubPath($stub): string
+    /**
+     * Resolve the fully-qualified path to the stub.
+     *
+     * @param  string  $stub
+     * @return string
+     */
+    protected function resolveStubPath($stub)
     {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-                        ? $customPath
-                        : __DIR__.$stub;
+        $localPath = __DIR__ . '/..' . $stub;
+        $publishedPath = $this->laravel->basePath(trim($stub, '/'));
+        return file_exists($publishedPath)
+            ? $publishedPath
+            : $localPath;
     }
 
     protected function getDefaultNamespace($rootNamespace): string
     {
         $this->domain = Str::studly($this->argument('domain'));
-        return $rootNamespace . '\Domains\\' . $this->domain.'\Http\Requests';
+        return $rootNamespace . '\Domains\\' . $this->domain . '\Http\Requests';
     }
 }
