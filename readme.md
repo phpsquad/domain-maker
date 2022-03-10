@@ -104,17 +104,7 @@ There are package specific stubs that you may publish to override (i.e., routes.
 php artisan vendor:publish --tag=domain-stubs
 ```
 ### Views
-If you'd like to auto-register views you need to replace the standard view provider in config.app.php
-
-replace:
-```
-Illuminate\View\ViewServiceProvider::class,
-```
-with:
-```
-PhpSquad\DomainMaker\ViewProvider::class,
-```
-
+View are automatically registered so long they are in the resources/views directory
 
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.

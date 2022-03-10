@@ -156,9 +156,12 @@ class DomainModelMakeCommand extends GeneratorCommand
      */
     protected function resolveStubPath($stub)
     {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
-            : __DIR__ . $stub;
+        $localPath = dirname(__FILE__, 2) .  $stub;
+        $publishedPath = $this->laravel->basePath(trim($stub, '/'));
+
+        return file_exists($publishedPath)
+            ? $publishedPath
+            : $localPath;
     }
 
     /**
