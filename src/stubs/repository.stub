@@ -7,48 +7,28 @@ use Illuminate\Database\Eloquent\Collection;
 
 class {{ class }}
 {
-    /**
-     * @return Collection<{{ model }}>
-     */
     public function getAll(): Collection
     {
         return {{ model }}::all();
     }
 
-    /**
-     * @param int $id {{ model }} id
-     * @return {{ model }}
-     */
     public function getById($id): {{ model }}
     {
         return {{ model }}::findOrFail($id);
     }
 
-    /**
-     * @param int $id {{ model }} id
-     * @return int
-     */
     public function delete($id): int
     {
         return {{ model }}::destroy($id);
     }
 
-    /**
-     * @param array $details What should the model consists of
-     * @return {{ model }}
-     */
-    public function create(array $Details): TestModel
+    public function create(array $attributes): {{ model }}
     {
-        return {{ model }}::create($Details);
+        return {{ model }}::create($attributes);
     }
 
-    /**
-     * @param int $id {{ model }} id
-     * @param array $newDetails What should the model consists of
-     * @return {{ model }}
-     */
-    public function update($id, array $newDetails): bool
+    public function update($id, array $attributes): bool
     {
-        return {{ model }}::whereId($id)->update($newDetails);
+        return {{ model }}::whereId($id)->update($attributes);
     }
 }

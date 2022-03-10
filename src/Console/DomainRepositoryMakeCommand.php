@@ -2,37 +2,18 @@
 
 namespace PhpSquad\DomainMaker\Console;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
-/// Modified version of:
-/// https://github.com/laravel/framework/blob/8.x/src/Illuminate/Foundation/Console/ResourceMakeCommand.php
 class DomainRepositoryMakeCommand extends GeneratorCommand
 {
-    /**
-     * The console command name.
-     *
-     * @var string
-     */
     protected $name = 'domain:make:repository';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Creates a new repository for a domain';
 
-    /**
-     * The type of class being generated.
-     *
-     * @var string
-     */
     protected $type = 'Repository';
-    protected $domain;
-    protected $model;
+    protected string $domain;
+    protected string $model;
 
     /**
      * Execute the console command.
@@ -53,24 +34,12 @@ class DomainRepositoryMakeCommand extends GeneratorCommand
         }
     }
 
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
-     */
-    protected function getStub()
+    protected function getStub(): string
     {
         return $this->resolveStubPath('/stubs/repository.stub');
     }
 
-
-    /**
-     * Resolve the fully-qualified path to the stub.
-     *
-     * @param  string  $stub
-     * @return string
-     */
-    protected function resolveStubPath($stub)
+    protected function resolveStubPath($stub): string
     {
         $localPath = __DIR__ . '/..' . $stub;
         $publishedPath = $this->laravel->basePath(trim($stub, '/'));
@@ -79,19 +48,14 @@ class DomainRepositoryMakeCommand extends GeneratorCommand
             : $localPath;
     }
 
-    /**
-     * Get the default namespace for the class.
-     *
-     * @return string
-     */
-    protected function getTheNamespace()
+    protected function getTheNamespace(): string
     {
         $rootNamespace = $this->laravel->getNamespace();
         $this->domain = Str::studly($this->argument('domain'));
         return $rootNamespace . 'Domains\\' . $this->argument("domain") . '\Repositories';
     }
 
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [
             ['domain', InputArgument::REQUIRED, 'The domain of the class'],
@@ -100,39 +64,22 @@ class DomainRepositoryMakeCommand extends GeneratorCommand
         ];
     }
 
-    /**
-     * Get the full path of generate class
-     *
-     * @return string
-     */
-    public function getSourceFilePath()
+    public function getSourceFilePath(): string
     {
         $filename = $this->argument("name");
         $domain = $this->argument("domain");
-        return base_path("App\\Domains\\$domain\\Repositories\\$filename.php");
+
+        $path =  base_path("app/Domains/$domain/Repositories/$filename.php");
+
+        return $path;
     }
 
-
-    /**
-     * Get the stub path and the stub variables
-     *
-     * @return bool|mixed|string
-     *
-     */
-    public function getSourceFile()
+    public function getSourceFile(): bool|array|string
     {
-
         return $this->getStubContents($this->getStub(), $this->getStubVariables());
     }
 
-    /**
-     * Replace the stub variables(key) with the desire value
-     *
-     * @param $stub
-     * @param array $stubVariables
-     * @return bool|mixed|string
-     */
-    public function getStubContents($stub, $stubVariables = [])
+    public function getStubContents($stub, $stubVariables = []): array|bool|string
     {
         $contents = file_get_contents($stub);
 
@@ -143,13 +90,6 @@ class DomainRepositoryMakeCommand extends GeneratorCommand
         return $contents;
     }
 
-    /**
-     **
-     * Map the stub variables present in stub to its value
-     *
-     * @return array
-     *
-     */
     public function getStubVariables()
     {
         return [
