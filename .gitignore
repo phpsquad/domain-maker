@@ -2,3 +2,4 @@
 .env
 .phpunit.result.cache
 domain-maker/.idea/
+.idea
