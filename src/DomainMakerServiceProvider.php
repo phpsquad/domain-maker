@@ -2,9 +2,9 @@
 
 namespace PhpSquad\DomainMaker;
 
-use DomainException;
 use Illuminate\Support\ServiceProvider;
 use PhpSquad\DomainMaker\Console\DomainControllerMakeCommand;
+use PhpSquad\DomainMaker\Console\DomainEnumMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainExceptionMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainFactoryMakeCommand;
 use PhpSquad\DomainMaker\Console\DomainJobMakeCommand;
@@ -48,6 +48,7 @@ class DomainMakerServiceProvider extends ServiceProvider
                 DomainExceptionMakeCommand::class,
                 DomainServiceMakeCommand::class,
                 DomainRepositoryMakeCommand::class,
+                DomainEnumMakeCommand::class,
             ]);
         }
 
