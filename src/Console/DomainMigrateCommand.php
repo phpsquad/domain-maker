@@ -10,7 +10,7 @@ use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\SqlServerConnection;
 use Illuminate\Support\Str;
 
-class MigrateCommand extends BaseCommand
+class DomainMigrateCommand extends BaseCommand
 {
     use ConfirmableTrait;
 
