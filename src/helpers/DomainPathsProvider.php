@@ -14,6 +14,10 @@ class DomainPathsProvider
 
     $domainPaths = [];
     foreach($domains as $domain) {
+      if (!is_dir($domain)) {
+        continue;
+      }
+
       $domainPaths[] = 'app/Domains/' . $domain;
     }
 

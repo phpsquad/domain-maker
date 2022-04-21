@@ -41,6 +41,10 @@ class ViewProvider extends ServiceProvider
         $domains = array_diff(scandir(base_path('app/Domains')), array('.', '..'));
 
         foreach ($domains as $domain) {
+            if (!is_dir($domain)) {
+                continue;
+            }
+            
             $dirs = array_diff(scandir(base_path('app/Domains/' . $domain)), array('.', '..'));
             $resourcesDirExists = in_array('resources', $dirs);
             if (!$resourcesDirExists) {
