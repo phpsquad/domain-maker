@@ -35,7 +35,7 @@ class ViewProvider extends ServiceProvider
     {
         $viewPaths = [];
         if (!file_exists(base_path('app/Domains'))) {
-            return;
+            return $viewPaths;
         };
 
         $domains = array_diff(scandir(base_path('app/Domains')), array('.', '..'));
