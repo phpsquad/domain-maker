@@ -23,9 +23,12 @@ class DomainRouteServiceProvider extends ServiceProvider
         $domains = array_diff(scandir(base_path('app/Domains')), array('.', '..'));
 
         foreach ($domains as $domain) {
-            if (!is_dir($domain)) {
+            $dirPath = base_path('app/Domains/') . $domain;
+
+            if (!is_dir($dirPath)) {
                 continue;
             }
+
             
             $dirs = array_diff(scandir(base_path('app/Domains/' . $domain)), array('.', '..'));
             $routesDirExists = in_array('routes', $dirs);
