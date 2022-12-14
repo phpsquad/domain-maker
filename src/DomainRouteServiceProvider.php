@@ -29,11 +29,10 @@ class DomainRouteServiceProvider extends ServiceProvider
                 continue;
             }
 
-            
+
             $dirs = array_diff(scandir(base_path('app/Domains/' . $domain)), array('.', '..'));
             $routesDirExists = in_array('routes', $dirs);
             if (!$routesDirExists) {
-                Log::info("$domain Domain missing routes directory. Can't register routes");
                 continue;
             }
 
